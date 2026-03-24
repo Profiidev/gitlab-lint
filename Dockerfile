@@ -2,16 +2,16 @@ FROM node:24-alpine AS builder
 
 WORKDIR /build
 
-COPY package.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY tsconfig.json ./
+COPY vite.config.ts ./
 COPY src ./src
 
 RUN npm run build
-RUN npm prune --production
 
-FROM node:20-alpine
+FROM node:24-alpine
 
 WORKDIR /app
 
@@ -19,8 +19,7 @@ WORKDIR /app
 RUN apk add --no-cache git
 
 COPY --from=builder /build/dist ./dist
-COPY --from=builder /build/node_modules ./node_modules
 COPY --from=builder /build/package.json ./
 
 # Default command
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/index.mjs"]
