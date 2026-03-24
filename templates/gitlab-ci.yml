@@ -101,8 +101,8 @@ gitlab_lint:
   script:
     - echo "Running gitlab-lint version $[[ component.version ]]."
     - |
-      if [ ! -f /app/dist/index.js ]; then
-        echo "Error: The gitlab-lint executable was not found at /app/dist/index.js."
+      if [ ! -f /app/dist/index.mjs ]; then
+        echo "Error: The gitlab-lint executable was not found at /app/dist/index.mjs."
         echo "Please ensure you are using the correct docker image for this component."
         exit 1
       fi
