@@ -74,7 +74,7 @@ spec:
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
-  image: registry.gitlab.com/profidev/gitlab-lint/gitlab-lint:$[[ inputs.version ]]
+  image: registry.gitlab.com/profidev/gitlab-lint/gitlab-lint:$[[ component.version ]]
   variables:
     AUTO_FIX: "$[[ inputs.auto_fix ]]"
     COMMIT: "$[[ inputs.commit ]]"
