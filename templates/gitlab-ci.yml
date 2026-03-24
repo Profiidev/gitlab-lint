@@ -1,0 +1,118 @@
+spec:
+  inputs:
+    stage:
+      default: test
+      description: "The stage to run the linting job in"
+    image:
+      default: "$CI_REGISTRY_IMAGE/gitlab-lint:latest"
+      description: "The docker image containing the gitlab-lint tool. Must be built from this component's Dockerfile."
+    auto_fix:
+      default: "false"
+      type: boolean
+      description: "Whether to auto-fix issues where possible"
+    commit:
+      default: "false"
+      type: boolean
+      description: "Whether to commit auto-fixed changes"
+    commit_message:
+      default: "style: fix linting issues for ${linter}"
+      description: "Message to use for auto-fix commits. ${linter} is replaced with linter name."
+    git_no_verify:
+      default: "false"
+      type: boolean
+      description: "Whether to skip git verification (pre-commit hooks) when committing"
+    continue_on_error:
+      default: "false"
+      type: boolean
+      description: "Whether to continue the pipeline on linting failure"
+    report_path:
+      default: "gl-code-quality-report.json"
+      description: "Path to the code quality report artifact"
+    git_user:
+      default: "GitLab CI"
+      description: "Git user name for auto-fix commits"
+    git_email:
+      default: "gitlab-ci@gitlab.com"
+      description: "Git email for auto-fix commits"
+    access_token:
+      default: ""
+      description: "GitLab access token for pushing auto-fixes (optional, requires write access)"
+
+    # Prettier Configuration
+    prettier:
+      default: "false"
+      type: boolean
+      description: "Enable Prettier linter"
+    prettier_extensions:
+      default: "js,ts,json,md,yml,yaml"
+      description: "Comma-separated list of file extensions to lint with Prettier"
+    prettier_args:
+      default: ""
+      description: "Additional arguments for Prettier"
+    prettier_dir:
+      default: "."
+      description: "Directory to run Prettier in"
+    prettier_command_prefix:
+      default: ""
+      description: "Prefix for the Prettier command"
+
+    # Clippy Configuration
+    clippy:
+      default: "false"
+      type: boolean
+      description: "Enable Clippy linter"
+    clippy_extensions:
+      default: "rs"
+      description: "Comma-separated list of file extensions to lint with Clippy"
+    clippy_args:
+      default: ""
+      description: "Additional arguments for Clippy"
+    clippy_dir:
+      default: "."
+      description: "Directory to run Clippy in"
+    clippy_command_prefix:
+      default: ""
+      description: "Prefix for the Clippy command"
+---
+gitlab_lint:
+  stage: $[[ inputs.stage ]]
+  image: $[[ inputs.image ]]
+  variables:
+    AUTO_FIX: "$[[ inputs.auto_fix ]]"
+    COMMIT: "$[[ inputs.commit ]]"
+    COMMIT_MESSAGE: "$[[ inputs.commit_message ]]"
+    GIT_NO_VERIFY: "$[[ inputs.git_no_verify ]]"
+    CONTINUE_ON_ERROR: "$[[ inputs.continue_on_error ]]"
+    REPORT_PATH: "$[[ inputs.report_path ]]"
+    GIT_USER: "$[[ inputs.git_user ]]"
+    GIT_EMAIL: "$[[ inputs.git_email ]]"
+    ACCESS_TOKEN: "$[[ inputs.access_token ]]"
+
+    PRETTIER: "$[[ inputs.prettier ]]"
+    PRETTIER_EXTENSIONS: "$[[ inputs.prettier_extensions ]]"
+    PRETTIER_ARGS: "$[[ inputs.prettier_args ]]"
+    PRETTIER_DIR: "$[[ inputs.prettier_dir ]]"
+    PRETTIER_COMMAND_PREFIX: "$[[ inputs.prettier_command_prefix ]]"
+
+    CLIPPY: "$[[ inputs.clippy ]]"
+    CLIPPY_EXTENSIONS: "$[[ inputs.clippy_extensions ]]"
+    CLIPPY_ARGS: "$[[ inputs.clippy_args ]]"
+    CLIPPY_DIR: "$[[ inputs.clippy_dir ]]"
+    CLIPPY_COMMAND_PREFIX: "$[[ inputs.clippy_command_prefix ]]"
+
+  script:
+    - |
+      if [ ! -f /app/dist/index.js ]; then
+        echo "Error: The gitlab-lint executable was not found at /app/dist/index.js."
+        echo "Please ensure you are using the correct docker image for this component."
+        exit 1
+      fi
+    - node /app/dist/index.js
+
+  artifacts:
+    reports:
+      codequality: "$[[ inputs.report_path ]]"
+    paths:
+      - "$[[ inputs.report_path ]]"
+    when: always
+    expire_in: 1 week
