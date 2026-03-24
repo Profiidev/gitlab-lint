@@ -66,7 +66,7 @@ async function run() {
       const prefix = getEnv(`${linterId.toUpperCase()}_COMMAND_PREFIX`);
       const lintDirAbs = join(workspace, lintDirRel);
       const linterAutoFix =
-        autoFix && getEnv(`${linterId.toUpperCase()}_AUTO_FIX`) === "true";
+        autoFix || getEnv(`${linterId.toUpperCase()}_AUTO_FIX`) === "true";
 
       if (!existsSync(lintDirAbs)) {
         throw new Error(
