@@ -99,7 +99,7 @@ gitlab_lint:
     CLIPPY_COMMAND_PREFIX: "$[[ inputs.clippy_command_prefix ]]"
 
   script:
-    - echo "Running gitlab-lint version $[[ inputs.version ]]."
+    - echo "Running gitlab-lint version $[[ component.version ]]."
     - |
       if [ ! -f /app/dist/index.js ]; then
         echo "Error: The gitlab-lint executable was not found at /app/dist/index.js."
