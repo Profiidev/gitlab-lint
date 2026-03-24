@@ -106,7 +106,7 @@ gitlab_lint:
         echo "Please ensure you are using the correct docker image for this component."
         exit 1
       fi
-    - node /app/dist/index.js
+    - node /app/dist/index.mjs
 
   artifacts:
     reports:
