@@ -15,20 +15,17 @@ FROM debian:bookworm-slim
 
 WORKDIR /app
 
-# Git is required for git operations
-RUN apt-get update && apt-get install -y git ca-certificates curl && rm -rf /var/lib/apt/lists/*
-
 # Install Node.js
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
-    export NVM_DIR="$HOME/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
-    nvm install 24 && \
-    nvm use 24
+RUN apt-get update && apt-get install -y git ca-certificates curl gnupg && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
+ENV PATH="/root/.cargo/bin:${PATH}"
+
 COPY --from=builder /build/dist ./dist
 COPY --from=builder /build/package.json ./
-
-# Use Bash as the default shell
-ENTRYPOINT ["/bin/bash", "-c"]
