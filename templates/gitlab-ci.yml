@@ -1,11 +1,9 @@
 spec:
+  component: [version]
   inputs:
     stage:
       default: test
       description: "The stage to run the linting job in"
-    image:
-      default: "$CI_REGISTRY_IMAGE/gitlab-lint:latest"
-      description: "The docker image containing the gitlab-lint tool. Must be built from this component's Dockerfile."
     auto_fix:
       default: "false"
       type: boolean
@@ -76,7 +74,7 @@ spec:
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
-  image: $[[ inputs.image ]]
+  image: registry.gitlab.com/profidev/gitlab-lint/gitlab-lint:$[[ inputs.version ]]
   variables:
     AUTO_FIX: "$[[ inputs.auto_fix ]]"
     COMMIT: "$[[ inputs.commit ]]"
@@ -101,6 +99,7 @@ gitlab_lint:
     CLIPPY_COMMAND_PREFIX: "$[[ inputs.clippy_command_prefix ]]"
 
   script:
+    - echo "Running gitlab-lint version $[[ inputs.version ]]."
     - |
       if [ ! -f /app/dist/index.js ]; then
         echo "Error: The gitlab-lint executable was not found at /app/dist/index.js."
