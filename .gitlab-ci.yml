@@ -14,9 +14,6 @@ include:
       commit: true
       texfmt: true
       
-gitlab_lint:
-  needs: []
-
 build_image:
   stage: build
   image: docker:latest

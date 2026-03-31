@@ -125,6 +125,7 @@ spec:
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
+  needs: []
   image: registry.gitlab.com/profidev/gitlab-lint/gitlab-lint:$[[ component.version ]]
   variables:
     AUTO_FIX: "$[[ inputs.auto_fix ]]"
