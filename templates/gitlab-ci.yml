@@ -42,7 +42,7 @@ spec:
       type: boolean
       description: "Enable Prettier linter"
     prettier_extensions:
-      default: "js,ts,json,md,yml,yaml"
+      default: "css,html,js,json,jsx,md,sass,scss,ts,tsx,vue,yaml,yml"
       description: "Comma-separated list of file extensions to lint with Prettier"
     prettier_args:
       default: ""
@@ -59,9 +59,6 @@ spec:
       default: "false"
       type: boolean
       description: "Enable Clippy linter"
-    clippy_extensions:
-      default: "rs"
-      description: "Comma-separated list of file extensions to lint with Clippy"
     clippy_args:
       default: ""
       description: "Additional arguments for Clippy"
@@ -77,27 +74,18 @@ spec:
       default: "false"
       type: boolean
       description: "Enable Rustfmt linter"
-    rustfmt_extensions:
-      default: "rs"
-      description: "Comma-separated list of file extensions to lint with Rustfmt"
     rustfmt_args:
       default: ""
       description: "Additional arguments for Rustfmt"
     rustfmt_dir:
       default: "."
       description: "Directory to run Rustfmt in"
-    rustfmt_command_prefix:
-      default: ""
-      description: "Prefix for the Rustfmt command"
 
     # Svelte Configuration
     svelte:
       default: "false"
       type: boolean
       description: "Enable Svelte linter"
-    svelte_extensions:
-      default: "svelte"
-      description: "Comma-separated list of file extensions to lint with Svelte"
     svelte_args:
       default: ""
       description: "Additional arguments for Svelte"
@@ -113,9 +101,6 @@ spec:
       default: "false"
       type: boolean
       description: "Enable TSC linter"
-    tsc_extensions:
-      default: "ts,tsx"
-      description: "Comma-separated list of file extensions to lint with TSC"
     tsc_args:
       default: ""
       description: "Additional arguments for TSC"
@@ -125,6 +110,18 @@ spec:
     tsc_command_prefix:
       default: ""
       description: "Prefix for the TSC command"
+
+    # TexFmt
+    texfmt:
+      default: "false"
+      type: boolean
+      description: "Enable TexFmt linter"
+    texfmt_args:
+      default: ""
+      description: "Additional arguments for TexFmt"
+    texfmt_dir:
+      default: "."
+      description: "Directory to run TexFmt in"
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
@@ -147,28 +144,27 @@ gitlab_lint:
     PRETTIER_COMMAND_PREFIX: "$[[ inputs.prettier_command_prefix ]]"
 
     CLIPPY: "$[[ inputs.clippy ]]"
-    CLIPPY_EXTENSIONS: "$[[ inputs.clippy_extensions ]]"
     CLIPPY_ARGS: "$[[ inputs.clippy_args ]]"
     CLIPPY_DIR: "$[[ inputs.clippy_dir ]]"
     CLIPPY_COMMAND_PREFIX: "$[[ inputs.clippy_command_prefix ]]"
 
     RUSTFMT: "$[[ inputs.rustfmt ]]"
-    RUSTFMT_EXTENSIONS: "$[[ inputs.rustfmt_extensions ]]"
     RUSTFMT_ARGS: "$[[ inputs.rustfmt_args ]]"
     RUSTFMT_DIR: "$[[ inputs.rustfmt_dir ]]"
-    RUSTFMT_COMMAND_PREFIX: "$[[ inputs.rustfmt_command_prefix ]]"
 
     SVELTE: "$[[ inputs.svelte ]]"
-    SVELTE_EXTENSIONS: "$[[ inputs.svelte_extensions ]]"
     SVELTE_ARGS: "$[[ inputs.svelte_args ]]"
     SVELTE_DIR: "$[[ inputs.svelte_dir ]]"
     SVELTE_COMMAND_PREFIX: "$[[ inputs.svelte_command_prefix ]]"
 
     TSC: "$[[ inputs.tsc ]]"
-    TSC_EXTENSIONS: "$[[ inputs.tsc_extensions ]]"
     TSC_ARGS: "$[[ inputs.tsc_args ]]"
     TSC_DIR: "$[[ inputs.tsc_dir ]]"
     TSC_COMMAND_PREFIX: "$[[ inputs.tsc_command_prefix ]]"
+
+    TEX_FMT: "$[[ inputs.texfmt ]]"
+    TEX_FMT_ARGS: "$[[ inputs.texfmt_args ]]"
+    TEX_FMT_DIR: "$[[ inputs.texfmt_dir ]]"
 
   script:
     - echo "Running gitlab-lint version $[[ component.version ]]."
