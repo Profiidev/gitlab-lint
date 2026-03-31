@@ -16,7 +16,7 @@ FROM debian:trixie-slim
 WORKDIR /app
 
 # Install Node.js
-RUN apt-get update && apt-get install -y git ca-certificates curl gnupg tex-fmt && \
+RUN apt-get update && apt-get install -y git ca-certificates curl gnupg && \
     mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y git ca-certificates curl gnupg tex-fmt 
     rm -rf /var/lib/apt/lists/*
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+RUN curl -L --fail https://github.com/WGUNDERWOOD/tex-fmt/releases/latest/download/tex-fmt-x86_64-linux.tar.gz -o tex-fmt.tar.gz && tar -xzf tex-fmt.tar.gz -C /usr/local/bin/ && rm tex-fmt.tar.gz
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 

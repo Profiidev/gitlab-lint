@@ -54,13 +54,7 @@ async function run() {
       console.group(`Run ${linter.linterName}`);
 
       const extensionsVar = `${linterId.toUpperCase()}_EXTENSIONS`;
-      const fileExtensions = getEnv(extensionsVar);
-      if (!fileExtensions) {
-        throw new Error(
-          `${extensionsVar} is required for ${linter.linterName}`,
-        );
-      }
-
+      const fileExtensions = getEnv(extensionsVar) || "";
       const args = getEnv(`${linterId.toUpperCase()}_ARGS`) || "";
       const lintDirRel = getEnv(`${linterId.toUpperCase()}_DIR`) || ".";
       const prefix = getEnv(`${linterId.toUpperCase()}_COMMAND_PREFIX`);
