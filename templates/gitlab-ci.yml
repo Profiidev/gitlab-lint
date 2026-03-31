@@ -13,8 +13,8 @@ spec:
       type: boolean
       description: "Whether to commit auto-fixed changes"
     commit_message:
-      default: "style: fix linting issues for ${linter}"
-      description: "Message to use for auto-fix commits. ${linter} is replaced with linter name."
+      default: "style: fix linting issues for {linter}"
+      description: "Message to use for auto-fix commits. {linter} is replaced with linter name."
     git_no_verify:
       default: "false"
       type: boolean
