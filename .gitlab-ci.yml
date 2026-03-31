@@ -3,8 +3,12 @@ stages:
   - build
   - release
   
+default:
+  before_script:
+    - npm install
+  
 include:
-  - component: gitlab.com/Profidev/gitlab-lint/gitlab-ci@v0.1.3
+  - component: gitlab.com/Profidev/gitlab-lint/gitlab-ci@v0.1.4
     inputs:
       stage: test
       prettier: true
@@ -22,6 +26,7 @@ build_image:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG || $CI_MERGE_REQUEST_ID'
   services:
     - docker:dind
+  before_script: ""
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
     # tag is CI_COMMIT_REF_NAME, which is main or the tag name for branches use CI_COMMIT_REF_SLUG
@@ -44,6 +49,7 @@ create-release:
   stage: release
   image: registry.gitlab.com/gitlab-org/cli:latest
   script: echo "Creating release $CI_COMMIT_TAG"
+  before_script: ""
   needs:
     - build_image
   rules:
