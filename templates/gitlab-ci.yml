@@ -13,8 +13,8 @@ spec:
       type: boolean
       description: "Whether to commit auto-fixed changes"
     commit_message:
-      default: "style: fix linting issues for ${linter}"
-      description: "Message to use for auto-fix commits. ${linter} is replaced with linter name."
+      default: "style: fix linting issues for {linter}"
+      description: "Message to use for auto-fix commits. {linter} is replaced with linter name."
     git_no_verify:
       default: "false"
       type: boolean
@@ -125,7 +125,11 @@ spec:
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
+  needs: []
   image: registry.gitlab.com/profidev/gitlab-lint/gitlab-lint:$[[ component.version ]]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
   variables:
     AUTO_FIX: "$[[ inputs.auto_fix ]]"
     COMMIT: "$[[ inputs.commit ]]"

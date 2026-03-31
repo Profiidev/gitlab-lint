@@ -14,7 +14,7 @@ async function run() {
   const skipVerification = getEnv("GIT_NO_VERIFY") === "true";
   const continueOnError = getEnv("CONTINUE_ON_ERROR") === "true";
   const commitMessage =
-    getEnv("COMMIT_MESSAGE") || "style: fix linting issues for ${linter}";
+    getEnv("COMMIT_MESSAGE") || "style: fix linting issues for {linter}";
   const reportPath = getEnv("REPORT_PATH") || "gl-code-quality-report.json";
 
   // Git auth for auto-fix
@@ -103,7 +103,7 @@ async function run() {
 
       if (linterAutoFix && commit) {
         if (git.hasChanges()) {
-          const msg = commitMessage.replace(/\${linter}/g, linter.linterName);
+          const msg = commitMessage.replace(/\{linter\}/g, linter.linterName);
           git.commitChanges(msg, skipVerification);
           git.pushChanges(skipVerification);
         }

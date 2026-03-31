@@ -1,10 +1,23 @@
 stages:
+  - test
   - build
   - release
-
+  
+include:
+  - component: gitlab.com/Profidev/gitlab-lint/gitlab-ci@v0.1.3
+    inputs:
+      stage: test
+      prettier: true
+      access_token: $TOKEN
+      tsc: true
+      auto_fix: true
+      commit: true
+      texfmt: true
+      
 build_image:
   stage: build
   image: docker:latest
+  needs: []
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG || $CI_MERGE_REQUEST_ID'
   services:
@@ -31,6 +44,8 @@ create-release:
   stage: release
   image: registry.gitlab.com/gitlab-org/cli:latest
   script: echo "Creating release $CI_COMMIT_TAG"
+  needs:
+    - build_image
   rules:
     - if: $CI_COMMIT_TAG
   release:
