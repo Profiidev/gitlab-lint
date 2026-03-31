@@ -127,6 +127,9 @@ gitlab_lint:
   stage: $[[ inputs.stage ]]
   needs: []
   image: registry.gitlab.com/profidev/gitlab-lint/gitlab-lint:$[[ component.version ]]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
   variables:
     AUTO_FIX: "$[[ inputs.auto_fix ]]"
     COMMIT: "$[[ inputs.commit ]]"
