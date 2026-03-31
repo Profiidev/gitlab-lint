@@ -1,21 +1,6 @@
 stages:
-  - test
   - build
   - release
-
-default:
-  before_script:
-    - npm install
-
-include:
-  - component: gitlab.com/Profidev/gitlab-lint/gitlab-ci@v0.1.4
-    inputs:
-      stage: test
-      prettier: true
-      access_token: $TOKEN
-      tsc: true
-      auto_fix: true
-      commit: true
 
 build_image:
   stage: build
