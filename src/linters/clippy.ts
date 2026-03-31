@@ -46,12 +46,6 @@ export default class Clippy {
     fix = false,
     prefix = "",
   ): CommandOutput {
-    if (extensions.length !== 1 || extensions[0] !== "rs") {
-      throw new Error(
-        `${this.linterName} error: File extensions are not configurable`,
-      );
-    }
-
     // clippy will throw an error if `--allow-dirty` is used when `--fix` isn't.
     // in order to have tests run consistently and to help out users we remove `--allow-dirty`
     // when not in fix

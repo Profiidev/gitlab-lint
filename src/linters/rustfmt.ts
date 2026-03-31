@@ -41,11 +41,6 @@ export default class RustFmt {
     fix = false,
     prefix = "",
   ): CommandOutput {
-    if (extensions.length !== 1 || extensions[0] !== "rs") {
-      throw new Error(
-        `${this.linterName} error: File extensions are not configurable`,
-      );
-    }
     const fixArg = fix ? "" : "--check";
     return run(`${prefix} cargo fmt ${fixArg} ${args}`, {
       dir,
