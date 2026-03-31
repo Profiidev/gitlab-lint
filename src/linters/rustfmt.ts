@@ -71,8 +71,7 @@ export default class RustFmt {
         // left over '/' or '\\'
         const parts = pathFull.split(dir);
         // Handle case where split might return unexpected results
-        const path =
-          parts.length > 1 ? parts[1].substring(1) : pathFull.trim();
+        const path = parts.length > 1 ? parts[1].substring(1) : pathFull.trim();
 
         const lineNr = parseInt(line, 10);
         lintResult.error.push({
