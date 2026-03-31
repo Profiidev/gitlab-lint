@@ -16,7 +16,7 @@ include:
       tsc: true
       auto_fix: true
       commit: true
-      
+
 build_image:
   stage: build
   image: docker:latest
