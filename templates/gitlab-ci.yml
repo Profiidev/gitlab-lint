@@ -197,6 +197,10 @@ gitlab_lint:
     DOTNET_FORMAT: "$[[ inputs.dotnet_format ]]"
     DOTNET_FORMAT_ARGS: "$[[ inputs.dotnet_format_args ]]"
     DOTNET_FORMAT_DIR: "$[[ inputs.dotnet_format_dir ]]"
+    
+    DOTNET_BUILD: "$[[ inputs.dotnet_build ]]"
+    DOTNET_BUILD_ARGS: "$[[ inputs.dotnet_build_args ]]"
+    DOTNET_BUILD_DIR: "$[[ inputs.dotnet_build_dir ]]"
 
   script:
     - echo "Running gitlab-lint version $[[ component.version ]]."
