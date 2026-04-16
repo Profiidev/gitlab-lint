@@ -5,6 +5,7 @@ import TSC from "./tsc";
 import Svelte from "./svelte";
 import TexFmt from "./tex-fmt";
 import DotnetFormat from "./dotnet-format";
+import DotnetBuild from "./dotnet-build";
 
 const linters = {
   clippy: Clippy,
@@ -14,6 +15,7 @@ const linters = {
   svelte: Svelte,
   tex_fmt: TexFmt,
   dotnet_format: DotnetFormat,
+  dotnet_build: DotnetBuild,
 };
 
 export default linters;

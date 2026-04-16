@@ -134,6 +134,18 @@ spec:
     dotnet_format_dir:
       default: "."
       description: "Directory to run dotnet format in"
+
+    # Dotnet Build
+    dotnet_build:
+      default: "false"
+      type: boolean
+      description: "Enable dotnet build linter"
+    dotnet_build_args:
+      default: ""
+      description: "Additional arguments for dotnet build"
+    dotnet_build_dir:
+      default: "."
+      description: "Directory to run dotnet build in"
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
