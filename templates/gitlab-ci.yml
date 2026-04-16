@@ -122,6 +122,18 @@ spec:
     texfmt_dir:
       default: "."
       description: "Directory to run TexFmt in"
+
+    # Dotnet Format
+    dotnet_format:
+      default: "false"
+      type: boolean
+      description: "Enable dotnet format linter"
+    dotnet_format_args:
+      default: ""
+      description: "Additional arguments for dotnet format"
+    dotnet_format_dir:
+      default: "."
+      description: "Directory to run dotnet format in"
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
@@ -169,6 +181,10 @@ gitlab_lint:
     TEX_FMT: "$[[ inputs.texfmt ]]"
     TEX_FMT_ARGS: "$[[ inputs.texfmt_args ]]"
     TEX_FMT_DIR: "$[[ inputs.texfmt_dir ]]"
+
+    DOTNET_FORMAT: "$[[ inputs.dotnet_format ]]"
+    DOTNET_FORMAT_ARGS: "$[[ inputs.dotnet_format_args ]]"
+    DOTNET_FORMAT_DIR: "$[[ inputs.dotnet_format_dir ]]"
 
   script:
     - echo "Running gitlab-lint version $[[ component.version ]]."

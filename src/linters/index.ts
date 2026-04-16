@@ -4,6 +4,7 @@ import RustFmt from "./rustfmt";
 import TSC from "./tsc";
 import Svelte from "./svelte";
 import TexFmt from "./tex-fmt";
+import DotnetFormat from "./dotnet-format";
 
 const linters = {
   clippy: Clippy,
@@ -12,6 +13,7 @@ const linters = {
   tsc: TSC,
   svelte: Svelte,
   tex_fmt: TexFmt,
+  dotnet_format: DotnetFormat,
 };
 
 export default linters;
