@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y git ca-certificates curl gnupg libicu-d
     rm -rf /var/lib/apt/lists/*
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN npm install -g prettier
+RUN npm install -g prettier oxlint
 
 RUN curl -L --fail https://github.com/WGUNDERWOOD/tex-fmt/releases/latest/download/tex-fmt-x86_64-linux.tar.gz -o tex-fmt.tar.gz && tar -xzf tex-fmt.tar.gz -C /usr/local/bin/ && rm tex-fmt.tar.gz
 

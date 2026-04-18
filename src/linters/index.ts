@@ -6,8 +6,10 @@ import Svelte from "./svelte";
 import TexFmt from "./tex-fmt";
 import DotnetFormat from "./dotnet-format";
 import DotnetBuild from "./dotnet-build";
+import OxLint from "./oxlint";
 
 const linters = {
+  oxlint: OxLint,
   clippy: Clippy,
   prettier: Prettier,
   rustfmt: RustFmt,
