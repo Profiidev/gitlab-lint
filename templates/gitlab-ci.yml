@@ -161,6 +161,21 @@ spec:
     oxlint_command_prefix:
       default: ""
       description: "Prefix for the OxLint command"
+
+    # OxFmt
+    oxfmt:
+      default: "false"
+      type: boolean
+      description: "Enable OxFmt linter"
+    oxfmt_args:
+      default: ""
+      description: "Additional arguments for OxFmt"
+    oxfmt_dir:
+      default: "."
+      description: "Directory to run OxFmt in"
+    oxfmt_command_prefix:
+      default: ""
+      description: "Prefix for the OxFmt command"
 ---
 gitlab_lint:
   stage: $[[ inputs.stage ]]
@@ -221,6 +236,11 @@ gitlab_lint:
     OXLINT_ARGS: "$[[ inputs.oxlint_args ]]"
     OXLINT_DIR: "$[[ inputs.oxlint_dir ]]"
     OXLINT_COMMAND_PREFIX: "$[[ inputs.oxlint_command_prefix ]]"
+
+    OXFMT: "$[[ inputs.oxfmt ]]"
+    OXFMT_ARGS: "$[[ inputs.oxfmt_args ]]"
+    OXFMT_DIR: "$[[ inputs.oxfmt_dir ]]"
+    OXFMT_COMMAND_PREFIX: "$[[ inputs.oxfmt_command_prefix ]]"
 
   script:
     - echo "Running gitlab-lint version $[[ component.version ]]."
