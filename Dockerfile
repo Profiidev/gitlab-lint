@@ -30,10 +30,5 @@ RUN curl -L --fail https://github.com/WGUNDERWOOD/tex-fmt/releases/latest/downlo
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version latest
-ENV PATH="/root/.dotnet:${PATH}"
-# Used to hide informations shown on first run of dotnet format
-RUN dotnet format --version
-
 COPY --from=builder /build/dist ./dist
 COPY --from=builder /build/package.json ./
